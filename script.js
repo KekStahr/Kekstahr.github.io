@@ -2,6 +2,107 @@ const projectMenuItem = document.querySelector(".nav-item--projects");
 const projectMenuToggle = document.querySelector(".project-menu-toggle");
 const projectMenu = document.querySelector(".project-menu");
 
+const projectDetails = {
+  "good-things-grow": {
+    title: "Good Things Grow",
+    meta: "Brand identity · 2025",
+    description: "A small seed of an idea, given room to become something generous. Good Things Grow is a warm identity for patient hands and hopeful beginnings, where every leaf marks the quiet joy of showing up again.",
+  },
+  "slow-studio": {
+    title: "Slow Studio",
+    meta: "Digital experience · 2024",
+    description: "A softer corner of the internet, made for taking your time. Slow Studio lets calm colours, generous space and unhurried details invite you to stay a little longer and find your own pace.",
+  },
+  "notes-to-self": {
+    title: "Notes to Self",
+    meta: "Editorial · 2024",
+    description: "A page can hold the things we almost forget to tell ourselves. Notes to Self turns passing thoughts into a little paper refuge: honest, imperfect and always ready for one more line.",
+  },
+  "little-rituals": {
+    title: "Little Rituals",
+    meta: "Art direction · 2024",
+    description: "The day is made of small returns: a light in the window, a familiar cup, a breath between things. Little Rituals gives those ordinary moments a gentle orbit of their own.",
+  },
+  "open-house": {
+    title: "Open House",
+    meta: "Web design · 2023",
+    description: "An open door, afternoon light, and the feeling that there is room for you here. Open House is a welcoming digital home built from warm edges, thoughtful paths and space to gather.",
+  },
+};
+
+document.querySelectorAll(".project-card .project-info h3").forEach((heading) => {
+  const title = heading.textContent.trim();
+  const letterStagger = 42;
+  const letterDuration = 320;
+  heading.closest(".project-card")?.style.setProperty(
+    "--title-animation-time",
+    `${(title.length - 1) * letterStagger + letterDuration}ms`,
+  );
+  const titleLayer = document.createElement("span");
+  titleLayer.className = "project-title-layer";
+  heading.setAttribute("aria-label", title);
+
+  [...title].forEach((character, index) => {
+    const letter = document.createElement("span");
+    letter.className = "project-letter";
+    letter.style.setProperty("--enter-delay", `${index * letterStagger}ms`);
+    letter.style.setProperty("--exit-delay", `${index * letterStagger}ms`);
+
+    const normal = document.createElement("span");
+    normal.className = "project-letter-normal";
+    normal.textContent = character === " " ? "\u00a0" : character;
+
+    const script = document.createElement("span");
+    script.className = "project-letter-script";
+    script.setAttribute("aria-hidden", "true");
+    script.textContent = character === " " ? "\u00a0" : character;
+
+    letter.append(normal, script);
+    titleLayer.append(letter);
+  });
+
+  heading.replaceChildren(titleLayer);
+});
+
+const projectDialog = document.querySelector(".project-dialog");
+
+if (projectDialog) {
+  const dialogTitle = projectDialog.querySelector("#project-dialog-title");
+  const dialogMeta = projectDialog.querySelector(".project-dialog-meta");
+  const dialogDescription = projectDialog.querySelector(".project-dialog-description");
+  const preview = projectDialog.querySelector(".project-preview-art");
+  let lastProjectCard = null;
+
+  const openProject = (card) => {
+    const details = projectDetails[card.dataset.project];
+    const artwork = card.querySelector(".project-visual");
+    if (!details || !artwork) return;
+
+    lastProjectCard = card;
+    dialogTitle.textContent = details.title;
+    dialogMeta.textContent = details.meta;
+    dialogDescription.textContent = details.description;
+    projectDialog.className = `project-dialog ${Array.from(card.classList).find((className) => className.startsWith("project-card--"))}`;
+    preview.replaceChildren(artwork.cloneNode(true));
+    projectDialog.showModal();
+    projectDialog.focus();
+  };
+
+  document.querySelectorAll(".project-card[data-project]").forEach((card) => {
+    card.addEventListener("click", () => openProject(card));
+    card.addEventListener("keydown", (event) => {
+      if (event.target !== card || (event.key !== "Enter" && event.key !== " ")) return;
+      event.preventDefault();
+      openProject(card);
+    });
+  });
+
+  projectDialog.addEventListener("click", (event) => {
+    if (event.target === projectDialog) projectDialog.close();
+  });
+  projectDialog.addEventListener("close", () => lastProjectCard?.focus());
+}
+
 if (projectMenuItem && projectMenuToggle && projectMenu) {
   projectMenuToggle.addEventListener("click", () => {
     const isOpen = projectMenuToggle.getAttribute("aria-expanded") === "true";
@@ -37,6 +138,24 @@ const formStatus = document.querySelector("#form-status");
 const submitButton = contactForm?.querySelector('button[type="submit"]');
 
 if (contactForm && formStatus && submitButton) {
+  contactForm.addEventListener("invalid", (event) => {
+    const field = event.target;
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) return;
+
+    if (field.validity.valueMissing) {
+      field.setCustomValidity("Please fill in all required fields before sending your message.");
+    } else if (field.validity.typeMismatch && field.type === "email") {
+      field.setCustomValidity("Please enter a valid email address.");
+    }
+  }, true);
+
+  contactForm.addEventListener("input", (event) => {
+    const field = event.target;
+    if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+      field.setCustomValidity("");
+    }
+  });
+
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -74,7 +193,7 @@ if (contactForm && formStatus && submitButton) {
     } finally {
       submitButton.disabled = false;
       submitButton.removeAttribute("aria-busy");
-      submitButton.innerHTML = 'Send message <span aria-hidden="true">↗</span>';
+      submitButton.textContent = "Send message";
     }
   });
 }

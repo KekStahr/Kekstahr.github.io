@@ -7,7 +7,7 @@
       name="description"
       content="A personal portfolio for thoughtful ideas, selected projects, and creative work."
     />
-    <title>R — Independent Creative</title>
+    <title>Reşo — Independent Creative</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
-  <body>
+  <body id="top">
     <header class="site-header">
       <nav class="glass-nav" aria-label="Main navigation">
         <a class="brand" href="#home" aria-label="R home">R<span>.</span></a>
@@ -35,7 +35,7 @@
             </ul>
           </li>
         </ul>
-        <a class="nav-cta" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+        <a class="nav-cta" href="#contact">Let’s talk</a>
       </nav>
     </header>
 
@@ -367,75 +367,78 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Here are a few things it has led me to.</p>
-            <h2>Selected <em>projects</em></h2>
+            <h2>Selected <em>Projects</em></h2>
           </div>
           <p class="section-note">Small details. Big feelings.<br />Always made with intention.</p>
         </div>
         <div class="project-grid">
-          <article class="project-card project-card--olive" id="good-things-grow">
+          <article class="project-card project-card--olive" id="good-things-grow" data-project="good-things-grow" role="button" tabindex="0" aria-haspopup="dialog">
             <div class="project-visual visual-garden">
               <span class="visual-ring"></span>
               <span class="visual-leaf leaf-one"></span>
               <span class="visual-leaf leaf-two"></span>
-              <span class="visual-spark">✳</span>
-              <span class="project-number">01</span>
             </div>
             <div class="project-info">
               <div><h3>Good Things Grow</h3><p>Brand identity · 2025</p></div>
-              <span class="project-arrow" aria-hidden="true">↗</span>
+              <span class="project-see-more">see more</span>
             </div>
           </article>
-          <article class="project-card project-card--peach" id="slow-studio">
+          <article class="project-card project-card--peach" id="slow-studio" data-project="slow-studio" role="button" tabindex="0" aria-haspopup="dialog">
             <div class="project-visual visual-studio">
               <span class="studio-sun"></span>
               <span class="studio-type">SLOW<br /><em>studio</em></span>
               <span class="studio-line"></span>
-              <span class="project-number">02</span>
             </div>
             <div class="project-info">
               <div><h3>Slow Studio</h3><p>Digital experience · 2024</p></div>
-              <span class="project-arrow" aria-hidden="true">↗</span>
+              <span class="project-see-more">see more</span>
             </div>
           </article>
-          <article class="project-card project-card--blue" id="notes-to-self">
+          <article class="project-card project-card--blue" id="notes-to-self" data-project="notes-to-self" role="button" tabindex="0" aria-haspopup="dialog">
             <div class="project-visual visual-notes">
               <span class="note-sheet sheet-back"></span>
               <span class="note-sheet sheet-front">
                 <span></span><span></span><span></span><span></span>
               </span>
-              <span class="note-star">✳</span>
-              <span class="project-number">03</span>
             </div>
             <div class="project-info">
               <div><h3>Notes to Self</h3><p>Editorial · 2024</p></div>
-              <span class="project-arrow" aria-hidden="true">↗</span>
+              <span class="project-see-more">see more</span>
             </div>
           </article>
-          <article class="project-card project-card--lavender" id="little-rituals">
+          <article class="project-card project-card--lavender" id="little-rituals" data-project="little-rituals" role="button" tabindex="0" aria-haspopup="dialog">
             <div class="project-visual visual-rituals">
               <span class="ritual-moon"></span>
               <span class="ritual-orbit"></span>
-              <span class="ritual-star">✳</span>
-              <span class="project-number">04</span>
             </div>
             <div class="project-info">
               <div><h3>Little Rituals</h3><p>Art direction · 2024</p></div>
-              <span class="project-arrow" aria-hidden="true">↗</span>
+              <span class="project-see-more">see more</span>
             </div>
           </article>
-          <article class="project-card project-card--sand" id="open-house">
+          <article class="project-card project-card--sand" id="open-house" data-project="open-house" role="button" tabindex="0" aria-haspopup="dialog">
             <div class="project-visual visual-house">
               <span class="house-shape"></span>
               <span class="house-window"></span>
               <span class="house-sun"></span>
-              <span class="project-number">05</span>
             </div>
             <div class="project-info">
               <div><h3>Open House</h3><p>Web design · 2023</p></div>
-              <span class="project-arrow" aria-hidden="true">↗</span>
+              <span class="project-see-more">see more</span>
             </div>
           </article>
         </div>
+        <dialog class="project-dialog" aria-labelledby="project-dialog-title">
+          <div class="project-dialog-copy">
+            <p class="eyebrow project-dialog-meta"></p>
+            <h3 id="project-dialog-title"></h3>
+            <p class="project-dialog-description"></p>
+          </div>
+          <div class="project-dialog-preview">
+            <p class="project-preview-label">A little moving preview</p>
+            <div class="project-preview-art"></div>
+          </div>
+        </dialog>
       </section>
 
       <section class="contact section-wrap" id="contact">
@@ -504,7 +507,7 @@
           </div>
           <div class="form-submit">
             <p class="form-status" id="form-status" aria-live="polite"></p>
-            <button class="form-button" type="submit">Send message<span aria-hidden="true">↗</span></button>
+            <button class="form-button" type="submit">Send message</button>
           </div>
         </form>
         <div class="contact-orbit orbit-left"></div>
@@ -515,7 +518,7 @@
     <footer class="site-footer">
       <a class="footer-brand" href="#home">R<span>.</span></a>
       <p>Made with care <span aria-hidden="true">✳</span></p>
-      <a href="#home">Back to top ↑</a>
+      <a href="#top">Back to top ↑</a>
     </footer>
   </body>
 </html>
