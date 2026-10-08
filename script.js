@@ -71,6 +71,7 @@ if (projectDialog) {
   const dialogMeta = projectDialog.querySelector(".project-dialog-meta");
   const dialogDescription = projectDialog.querySelector(".project-dialog-description");
   const preview = projectDialog.querySelector(".project-preview-art");
+  const closeButton = projectDialog.querySelector(".project-dialog-close");
   let lastProjectCard = null;
 
   const openProject = (card) => {
@@ -85,7 +86,7 @@ if (projectDialog) {
     projectDialog.className = `project-dialog ${Array.from(card.classList).find((className) => className.startsWith("project-card--"))}`;
     preview.replaceChildren(artwork.cloneNode(true));
     projectDialog.showModal();
-    projectDialog.focus();
+    closeButton.focus();
   };
 
   document.querySelectorAll(".project-card[data-project]").forEach((card) => {
@@ -97,6 +98,7 @@ if (projectDialog) {
     });
   });
 
+  closeButton.addEventListener("click", () => projectDialog.close());
   projectDialog.addEventListener("click", (event) => {
     if (event.target === projectDialog) projectDialog.close();
   });
