@@ -1865,29 +1865,31 @@ p {
 
 .project-dialog-close {
   position: absolute;
-  top: 13px;
-  right: 19px;
+  top: 22px;
+  right: 24px;
   display: grid;
-  width: 30px;
-  height: 30px;
+  width: 38px;
+  height: 38px;
   place-items: center;
   padding: 0;
   border: 0;
-  background: transparent;
+  border-radius: 50%;
+  background: rgba(255, 251, 245, 0.86);
   color: #d87941;
-  font: 400 25px/1 var(--sans);
+  font: 400 21px/1 var(--sans);
   cursor: pointer;
-  transition: color 200ms ease, transform 200ms ease;
+  transition: color 240ms ease, background-color 240ms ease, transform 320ms ease;
 }
 
 .project-dialog-close:hover {
-  color: #b95f31;
-  transform: rotate(90deg);
+  background: #d87941;
+  color: #fffaf4;
+  transform: rotate(90deg) scale(1.04);
 }
 
 .project-dialog-close:focus-visible {
-  outline: 1px solid #d87941;
-  outline-offset: 3px;
+  outline: 2px solid #d87941;
+  outline-offset: 4px;
 }
 
 .project-dialog[open] {
