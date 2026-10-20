@@ -73,6 +73,7 @@ if (projectDialog) {
   const projectTerms = projectDialog.querySelector(".project-terms");
   const projectActions = projectDialog.querySelector(".project-dialog-actions");
   const preview = projectDialog.querySelector(".project-preview-art");
+  const previewPanel = projectDialog.querySelector(".project-dialog-preview");
   const closeButton = projectDialog.querySelector(".project-dialog-close");
   let lastProjectCard = null;
 
@@ -105,8 +106,22 @@ if (projectDialog) {
   });
 
   closeButton.addEventListener("click", () => projectDialog.close());
+  previewPanel.addEventListener("wheel", (event) => {
+    projectDialog.scrollTop += event.deltaY;
+    event.preventDefault();
+  }, { passive: false });
+
   projectDialog.addEventListener("click", (event) => {
-    if (event.target === projectDialog) projectDialog.close();
+    if (event.target !== projectDialog) return;
+
+    const bounds = projectDialog.getBoundingClientRect();
+    const clickedOutside =
+      event.clientX < bounds.left ||
+      event.clientX > bounds.right ||
+      event.clientY < bounds.top ||
+      event.clientY > bounds.bottom;
+
+    if (clickedOutside) projectDialog.close();
   });
   projectDialog.addEventListener("close", () => lastProjectCard?.focus());
 }
