@@ -3,10 +3,10 @@ const projectMenuToggle = document.querySelector(".project-menu-toggle");
 const projectMenu = document.querySelector(".project-menu");
 
 const projectDetails = {
-  "good-things-grow": {
-    title: "Good Things Grow",
-    meta: "Brand identity · 2025",
-    description: "A small seed of an idea, given room to become something generous. Good Things Grow is a warm identity for patient hands and hopeful beginnings, where every leaf marks the quiet joy of showing up again.",
+  "reso-jeanne-darc": {
+    title: "Reşo Jeanne d’Arc",
+    meta: "Mobile & web app · 2026",
+    description: "Reşo Jeanne d’Arc helps a group stay in touch while they’re out together. Share your location if you choose, send a message, or let everyone know when plans change. It’s a simple way to keep the group on the same page, with location sharing always in each person’s hands.",
   },
   "slow-studio": {
     title: "Slow Studio",
@@ -70,6 +70,8 @@ if (projectDialog) {
   const dialogTitle = projectDialog.querySelector("#project-dialog-title");
   const dialogMeta = projectDialog.querySelector(".project-dialog-meta");
   const dialogDescription = projectDialog.querySelector(".project-dialog-description");
+  const projectTerms = projectDialog.querySelector(".project-terms");
+  const projectActions = projectDialog.querySelector(".project-dialog-actions");
   const preview = projectDialog.querySelector(".project-preview-art");
   const closeButton = projectDialog.querySelector(".project-dialog-close");
   let lastProjectCard = null;
@@ -83,6 +85,10 @@ if (projectDialog) {
     dialogTitle.textContent = details.title;
     dialogMeta.textContent = details.meta;
     dialogDescription.textContent = details.description;
+    const isResoProject = card.dataset.project === "reso-jeanne-darc";
+    projectTerms.hidden = !isResoProject;
+    projectTerms.open = false;
+    projectActions.hidden = !isResoProject;
     projectDialog.className = `project-dialog ${Array.from(card.classList).find((className) => className.startsWith("project-card--"))}`;
     preview.replaceChildren(artwork.cloneNode(true));
     projectDialog.showModal();
