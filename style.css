@@ -2875,6 +2875,14 @@ p {
 
     border-radius: 15px;
 
+    background: rgba(255, 255, 255, 0.94);
+
+    -webkit-backdrop-filter: none;
+
+    backdrop-filter: none;
+
+    animation: none;
+
   }
 
   .brand {
