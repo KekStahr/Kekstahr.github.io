@@ -226,7 +226,39 @@ const contactCatStage = document.querySelector(".contact-cat-stage");
 if (contactCatStage) {
   const catHead = contactCatStage.querySelector(".cat-head");
   const catHearts = contactCatStage.querySelector(".cat-hearts");
-  let lastHeartAt = 0;
+  let lastHeartAt = Number.NEGATIVE_INFINITY;
+
+  const showHeart = (clientX, clientY) => {
+    const bounds = contactCatStage.getBoundingClientRect();
+    if (
+      !bounds.width ||
+      !bounds.height ||
+      clientX < bounds.left ||
+      clientX > bounds.right ||
+      clientY < bounds.top ||
+      clientY > bounds.bottom
+    ) return;
+
+    const now = performance.now();
+    if (now - lastHeartAt < 180) return;
+    lastHeartAt = now;
+
+    const heart = document.createElement("span");
+    heart.className = "cat-heart";
+    heart.textContent = "♥";
+    heart.style.left = `${clientX - bounds.left}px`;
+    heart.style.top = `${clientY - bounds.top}px`;
+    heart.style.setProperty("--heart-drift", `${Math.round(Math.random() * 28 - 14)}px`);
+    heart.addEventListener("animationend", () => heart.remove(), { once: true });
+    catHearts.append(heart);
+    window.setTimeout(() => heart.remove(), 1100);
+  };
+
+  document.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "touch") {
+      showHeart(event.clientX, event.clientY);
+    }
+  }, { passive: true });
 
   document.addEventListener("pointermove", (event) => {
     const bounds = contactCatStage.getBoundingClientRect();
@@ -244,24 +276,8 @@ if (contactCatStage) {
     contactCatStage.style.setProperty("--pupil-x", `${(Math.max(-1, Math.min(1, offsetX)) * 2.5).toFixed(1)}px`);
     contactCatStage.style.setProperty("--pupil-y", `${(Math.max(-1, Math.min(1, offsetY)) * 1.5).toFixed(1)}px`);
 
-    const isPetting =
-      event.clientX >= bounds.left &&
-      event.clientX <= bounds.right &&
-      event.clientY >= bounds.top &&
-      event.clientY <= bounds.bottom;
-    const now = performance.now();
-
-    if (!isPetting || now - lastHeartAt < 180) return;
-    lastHeartAt = now;
-
-    const heart = document.createElement("span");
-    heart.className = "cat-heart";
-    heart.textContent = "♥";
-    heart.style.left = `${event.clientX - bounds.left}px`;
-    heart.style.top = `${event.clientY - bounds.top}px`;
-    heart.style.setProperty("--heart-drift", `${Math.round(Math.random() * 28 - 14)}px`);
-    heart.addEventListener("animationend", () => heart.remove(), { once: true });
-    catHearts.append(heart);
-    window.setTimeout(() => heart.remove(), 1100);
+    if (event.pointerType !== "touch") {
+      showHeart(event.clientX, event.clientY);
+    }
   }, { passive: true });
 }
