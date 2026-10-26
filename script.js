@@ -254,27 +254,32 @@ if (contactCatStage) {
     window.setTimeout(() => heart.remove(), 1100);
   };
 
-  document.addEventListener("pointerdown", (event) => {
-    if (event.pointerType === "touch") {
-      showHeart(event.clientX, event.clientY);
-    }
-  }, { passive: true });
-
-  document.addEventListener("pointermove", (event) => {
+  const updateCatGaze = (clientX, clientY) => {
     const bounds = contactCatStage.getBoundingClientRect();
     if (!bounds.width || !bounds.height) return;
 
     const centerX = bounds.left + bounds.width / 2;
     const centerY = bounds.top + bounds.height * 0.43;
-    const offsetX = (event.clientX - centerX) / (bounds.width / 2);
-    const offsetY = (event.clientY - centerY) / (bounds.height / 2);
-    const distance = Math.hypot(event.clientX - centerX, event.clientY - centerY);
+    const offsetX = (clientX - centerX) / (bounds.width / 2);
+    const offsetY = (clientY - centerY) / (bounds.height / 2);
+    const distance = Math.hypot(clientX - centerX, clientY - centerY);
     const isNear = distance < 240;
 
     contactCatStage.classList.toggle("is-curious", isNear);
     catHead.style.transform = `rotate(${(Math.max(-1, Math.min(1, offsetX)) * 11).toFixed(1)}deg)`;
     contactCatStage.style.setProperty("--pupil-x", `${(Math.max(-1, Math.min(1, offsetX)) * 2.5).toFixed(1)}px`);
     contactCatStage.style.setProperty("--pupil-y", `${(Math.max(-1, Math.min(1, offsetY)) * 1.5).toFixed(1)}px`);
+  };
+
+  document.addEventListener("pointerdown", (event) => {
+    updateCatGaze(event.clientX, event.clientY);
+    if (event.pointerType === "touch") {
+      showHeart(event.clientX, event.clientY);
+    }
+  }, { passive: true });
+
+  document.addEventListener("pointermove", (event) => {
+    updateCatGaze(event.clientX, event.clientY);
 
     if (event.pointerType !== "touch") {
       showHeart(event.clientX, event.clientY);

@@ -2875,6 +2875,8 @@ p {
 
     border-radius: 15px;
 
+    overflow: hidden;
+
     background: #fff;
 
     box-shadow: 0 4px 20px rgba(45, 48, 39, 0.08);
@@ -2884,6 +2886,12 @@ p {
     backdrop-filter: none;
 
     animation: none;
+
+  }
+
+  .glass-nav:has(.nav-item--projects.is-open) {
+
+    overflow: visible;
 
   }
 
