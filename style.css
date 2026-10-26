@@ -2420,7 +2420,7 @@ p {
 
 @media (max-width: 760px) {
   .contact-cat-stage {
-    top: 0;
+    top: 14px;
     right: 8px;
     width: 132px;
     height: 126px;
@@ -2875,13 +2875,25 @@ p {
 
     border-radius: 15px;
 
-    background: rgba(255, 255, 255, 0.94);
+    background: #fff;
+
+    box-shadow: 0 4px 20px rgba(45, 48, 39, 0.08);
 
     -webkit-backdrop-filter: none;
 
     backdrop-filter: none;
 
     animation: none;
+
+  }
+
+  .project-menu {
+
+    background: #fff;
+
+    -webkit-backdrop-filter: none;
+
+    backdrop-filter: none;
 
   }
 
