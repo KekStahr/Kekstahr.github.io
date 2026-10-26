@@ -76,7 +76,7 @@ tr th {
 
   top: 0;
 
-  padding: 20px 5.5vw 0;
+  padding: 20px 0 0;
 
 }
 
@@ -86,7 +86,7 @@ tr th {
 
   display: flex;
 
-  width: min(100%, 1180px);
+  width: min(100% - 11vw, 1180px);
 
   height: 72px;
 
@@ -2863,11 +2863,13 @@ p {
 
   .site-header {
 
-    padding: 12px 4vw 0;
+    padding: 12px 0 0;
 
   }
 
   .glass-nav {
+
+    width: min(100% - 8vw, 560px);
 
     height: 62px;
 
@@ -2877,7 +2879,7 @@ p {
 
     overflow: hidden;
 
-    background: #fff;
+    background: rgba(255, 255, 255, 0.94);
 
     box-shadow: 0 4px 20px rgba(45, 48, 39, 0.08);
 
