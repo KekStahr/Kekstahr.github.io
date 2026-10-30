@@ -24,7 +24,7 @@ const projectDetails = {
       "Appearance, accent color, and language settings",
       "An optional Gemini coach that requires your own API key",
     ],
-    downloadUrl: "https://github.com/KekStahr/Kekstahr.github.io/releases/tag/version1.0",
+    downloadUrl: "https://github.com/KekStahr/Kekstahr.github.io/releases/download/version1.0/Reso_Motivation.apk",
     downloadLabel: "Download for Android",
   },
   "reso-agent-clicker": {
@@ -41,7 +41,7 @@ const projectDetails = {
       "Save, load, and manage multiple setups",
       "Standalone Windows executable included in the release",
     ],
-    downloadUrl: "https://github.com/KekStahr/Kekstahr.github.io/releases/tag/ver1.0",
+    downloadUrl: "https://github.com/KekStahr/Kekstahr.github.io/releases/download/ver1.0/Reso.Agent.Clicker.exe",
     downloadLabel: "Download for Windows",
   },
 };
@@ -124,12 +124,12 @@ if (projectDialog) {
     if (details.downloadUrl) {
       projectDownload.href = details.downloadUrl;
       projectDownloadLabel.textContent = details.downloadLabel;
-      if (details.downloadUrl.includes("/releases/")) {
+      if (details.downloadUrl.includes("/releases/tag/")) {
         projectDownload.removeAttribute("download");
         projectDownload.target = "_blank";
         projectDownload.rel = "noopener noreferrer";
       } else {
-        projectDownload.setAttribute("download", "reso-jeanne-darc.apk");
+        projectDownload.setAttribute("download", new URL(details.downloadUrl).pathname.split("/").pop());
         projectDownload.removeAttribute("target");
         projectDownload.removeAttribute("rel");
       }
