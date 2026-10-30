@@ -8,25 +8,19 @@ const projectDetails = {
     meta: "Mobile & web app · 2026",
     description: "Reşo Jeanne d’Arc helps a group stay in touch while they’re out together. Share your location if you choose, send a message, or let everyone know when plans change. It’s a simple way to keep the group on the same page, with location sharing always in each person’s hands.",
   },
-  "slow-studio": {
-    title: "Slow Studio",
-    meta: "Digital experience · 2024",
-    description: "A softer corner of the internet, made for taking your time. Slow Studio lets calm colours, generous space and unhurried details invite you to stay a little longer and find your own pace.",
-  },
-  "notes-to-self": {
-    title: "Notes to Self",
-    meta: "Editorial · 2024",
-    description: "A page can hold the things we almost forget to tell ourselves. Notes to Self turns passing thoughts into a little paper refuge: honest, imperfect and always ready for one more line.",
-  },
-  "little-rituals": {
-    title: "Little Rituals",
-    meta: "Art direction · 2024",
-    description: "The day is made of small returns: a light in the window, a familiar cup, a breath between things. Little Rituals gives those ordinary moments a gentle orbit of their own.",
-  },
-  "open-house": {
-    title: "Open House",
-    meta: "Web design · 2023",
-    description: "An open door, afternoon light, and the feeling that there is room for you here. Open House is a welcoming digital home built from warm edges, thoughtful paths and space to gather.",
+  "reso-motivation": {
+    title: "Reso Motivation",
+    meta: "Android app · 2026 · Pre-release",
+    description: "Reso Motivation helps you organize tasks, stay focused, and track your progress. It is an early work-in-progress version, so features may change as development continues. Tasks, focus sessions, and settings are stored locally on your device.",
+    features: [
+      "Tasks with priorities and deadlines",
+      "A customizable focus timer with breaks",
+      "Statistics for focus time and completed tasks",
+      "Calendar and daily views",
+      "Custom habits and streaks",
+      "Appearance, accent color, and language settings",
+      "An optional Gemini coach that requires your own API key",
+    ],
   },
 };
 
@@ -70,6 +64,7 @@ if (projectDialog) {
   const dialogTitle = projectDialog.querySelector("#project-dialog-title");
   const dialogMeta = projectDialog.querySelector(".project-dialog-meta");
   const dialogDescription = projectDialog.querySelector(".project-dialog-description");
+  const projectFeatures = projectDialog.querySelector(".project-dialog-features");
   const projectTerms = projectDialog.querySelector(".project-terms");
   const projectActions = projectDialog.querySelector(".project-dialog-actions");
   const preview = projectDialog.querySelector(".project-preview-art");
@@ -86,6 +81,13 @@ if (projectDialog) {
     dialogTitle.textContent = details.title;
     dialogMeta.textContent = details.meta;
     dialogDescription.textContent = details.description;
+    const features = details.features || [];
+    projectFeatures.replaceChildren(...features.map((feature) => {
+      const item = document.createElement("li");
+      item.textContent = feature;
+      return item;
+    }));
+    projectFeatures.hidden = !features.length;
     const isResoProject = card.dataset.project === "reso-jeanne-darc";
     projectTerms.hidden = !isResoProject;
     projectTerms.open = false;
