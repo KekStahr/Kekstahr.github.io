@@ -7,6 +7,9 @@ const projectDetails = {
     title: "Reşo Jeanne d’Arc",
     meta: "Mobile & web app · 2026",
     description: "Reşo Jeanne d’Arc helps a group stay in touch while they’re out together. Share your location if you choose, send a message, or let everyone know when plans change. It’s a simple way to keep the group on the same page, with location sharing always in each person’s hands.",
+    webUrl: "https://rescho-o4ry.onrender.com/",
+    downloadUrl: "https://github.com/KekStahr/Kekstahr.github.io/releases/download/v1.0.0/ResoJeanneDarc.apk",
+    downloadLabel: "Download for Android",
   },
   "reso-motivation": {
     title: "Reso Motivation",
@@ -21,6 +24,25 @@ const projectDetails = {
       "Appearance, accent color, and language settings",
       "An optional Gemini coach that requires your own API key",
     ],
+    downloadUrl: "https://github.com/KekStahr/Kekstahr.github.io/releases/tag/version1.0",
+    downloadLabel: "Download for Android",
+  },
+  "reso-agent-clicker": {
+    title: "Reso Agent Clicker",
+    meta: "Windows desktop software · 2026",
+    description: "Reso Agent Clicker is a Windows desktop tool that watches your screen for image templates and performs the clicks you configure. Build and save setups for different tasks, decide how each match should be clicked, and let the software wait for an image before acting. With global start and stop hotkeys plus a separate autoclicker, the controls stay close at hand.",
+    features: [
+      "Detect configured image templates on screen",
+      "Choose single, double, or repeated clicks for each match",
+      "Optionally wait for an image to appear before clicking",
+      "Adjust mouse movement speed and click interval",
+      "Start or stop detection with configurable global hotkeys",
+      "Use a standalone autoclicker at the current cursor position",
+      "Save, load, and manage multiple setups",
+      "Standalone Windows executable included in the release",
+    ],
+    downloadUrl: "https://github.com/KekStahr/Kekstahr.github.io/releases/tag/ver1.0",
+    downloadLabel: "Download for Windows",
   },
 };
 
@@ -67,6 +89,9 @@ if (projectDialog) {
   const projectFeatures = projectDialog.querySelector(".project-dialog-features");
   const projectTerms = projectDialog.querySelector(".project-terms");
   const projectActions = projectDialog.querySelector(".project-dialog-actions");
+  const projectWebLink = projectDialog.querySelector(".project-dialog-web-link");
+  const projectDownload = projectDialog.querySelector(".project-download");
+  const projectDownloadLabel = projectDialog.querySelector(".project-download-label");
   const preview = projectDialog.querySelector(".project-preview-art");
   const previewPanel = projectDialog.querySelector(".project-dialog-preview");
   const closeButton = projectDialog.querySelector(".project-dialog-close");
@@ -88,10 +113,27 @@ if (projectDialog) {
       return item;
     }));
     projectFeatures.hidden = !features.length;
-    const isResoProject = card.dataset.project === "reso-jeanne-darc";
-    projectTerms.hidden = !isResoProject;
+    const isJeanneDarcProject = card.dataset.project === "reso-jeanne-darc";
+    projectTerms.hidden = !isJeanneDarcProject;
     projectTerms.open = false;
-    projectActions.hidden = !isResoProject;
+    projectActions.hidden = !details.downloadUrl;
+    projectWebLink.hidden = !details.webUrl;
+    if (details.webUrl) {
+      projectWebLink.querySelector("a").href = details.webUrl;
+    }
+    if (details.downloadUrl) {
+      projectDownload.href = details.downloadUrl;
+      projectDownloadLabel.textContent = details.downloadLabel;
+      if (details.downloadUrl.includes("/releases/")) {
+        projectDownload.removeAttribute("download");
+        projectDownload.target = "_blank";
+        projectDownload.rel = "noopener noreferrer";
+      } else {
+        projectDownload.setAttribute("download", "reso-jeanne-darc.apk");
+        projectDownload.removeAttribute("target");
+        projectDownload.removeAttribute("rel");
+      }
+    }
     projectDialog.className = `project-dialog ${Array.from(card.classList).find((className) => className.startsWith("project-card--"))}`;
     preview.replaceChildren(artwork.cloneNode(true));
     projectDialog.showModal();
